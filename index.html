@@ -153,9 +153,9 @@
           if (response.status === 201) {
             return response.json();
           } else if (response.status === 400) {                        
-            return Promise.reject(alert("Сообщение не может быть короче трех символов"));
+            return Promise.reject("Bad request");
           } else {
-            return Promise.reject(alert("Проверьте подключение к сети Интернет"));
+            return Promise.reject("Bad connection");
           }       
         })
         .then((responseData) => {
@@ -181,8 +181,13 @@
         })
         .catch((error) => {
           loadingMessageBottom.style.display = 'none';
-          addCommentElement.style.display = 'flex';   
-          alert("Кажется что-то пошло не так, попробуй позже...");
+          addCommentElement.style.display = 'flex';
+          if (error === "Bad request") {
+            alert('Сообщение не может быть короче трех символов') 
+          } else {
+            alert("Проверьте подключение к сети Интернет");
+          }  
+          
           //TODO Caught Errors 
           console.warn(error);
         });
