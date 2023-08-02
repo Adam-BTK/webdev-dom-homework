@@ -139,7 +139,8 @@
 
       const newComment = {
         text: comment.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
-        name: name.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+        name: name.replaceAll('<', '&lt;').replaceAll('>', '&gt;'),
+        forceError: true
       };
 
       // POST the new comment to the server
@@ -148,7 +149,14 @@
         body: JSON.stringify(newComment),
       })
         .then((response) => {
-          return response.json();
+          // Code handling errors
+          if (response.status === 201) {
+            return response.json();
+          } else if (response.status === 400) {                        
+            return Promise.reject("Bad request");
+          } else {
+            return Promise.reject("Bad connection");
+          }       
         })
         .then((responseData) => {
           return fetch('https://wedev-api.sky.pro/api/v1/adam-batukaev/comments', {
@@ -156,22 +164,33 @@
           });
         })
         .then((response) => {
-          return response.json();
+          console.log(response);
+          return response.json();          
         })
         .then((responseData) => {
           comments = responseData.comments;
           renderComments();
         })
         .then(() => {
+          // Clear input
+          document.querySelector('.add-form-name').value = '';
+          document.querySelector('.add-form-text').value = '';
           // Hide loading message when comments are rendered 
           loadingMessageBottom.style.display = 'none';
+          addCommentElement.style.display = 'flex';          
+        })
+        .catch((error) => {
+          loadingMessageBottom.style.display = 'none';
           addCommentElement.style.display = 'flex';
+          if (error === "Bad request") {
+            alert('Сообщение не может быть короче трех символов') 
+          } else {
+            alert("Проверьте подключение к сети Интернет");
+          }  
+          
+          //TODO Caught Errors 
+          console.warn(error);
         });
-
-
-      // Clear input
-      document.querySelector('.add-form-name').value = '';
-      document.querySelector('.add-form-text').value = '';
     };
 
     const addButton = document.querySelector('.add-form-button');
