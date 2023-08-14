@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Проект "Комменты"</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="container">
+    <ul class="comments">
+      <div class="loading-message-top" style="display: none;">Пожалуйста подождите, загружаю комментарии...</div>
+      <!-- Спиосок рендерится из JS -->
+    </ul>
+    <div class="add-form" style="display: none;">
+      <input type="text" class="add-form-name" placeholder="Введите ваше имя" />
+      <textarea type="textarea" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
+      <div class="add-form-row">
+        <button class="add-form-button">Написать</button>
+      </div>
+    </div>
+    <div class="loading-message-bottom" style="display: none;">Комментарий добавляется...</div>
+    <div class="login-loading-message" style="display: none;">Чтобы добавить
+      комментарий, &nbsp; <span class="login">авторизуйтесь</span></div>
+
+    <div id="app"></div>
+
+    <div id="registration"></div>
+
+
+  </div>
+
+  <script type="module" src="main.js"></script>
+
+</html>
+
