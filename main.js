@@ -25,6 +25,7 @@ const showComments = () => {
         .then(() => {
             // Hide loading message when comments are rendered 
             loadingMessageTop.style.display = 'none';
+            loginLoadingMessage.style.display = 'flex';
         });
 };
 
@@ -132,7 +133,6 @@ const clearFields = () => {
 
 // Fetch initial comments from the server
 showComments();
-// showLoginElement();
 
 
 // Set up event listeners
